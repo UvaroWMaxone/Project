@@ -1,0 +1,124 @@
+body{
+    font-size: 16px;
+    background-color: bisque;
+    font-family:'Courier New', Courier, monospace;
+    font-style:italic ;
+    margin:0px
+}
+
+.head{
+    background-image: url(colorful-polygonal-connection-design-with-low-poly-vector-illustration.jpg);
+    background-size:100% 100%;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.container{
+    margin-left: 20px;
+}
+
+.main h1{
+    margin-top: 0px;
+}
+
+.left{
+    display: flex;
+    max-width: 160px;
+    padding: 10px 5px;
+    border-radius: 5px;
+    margin: 2px;
+    margin-right: 30px;
+}
+
+.zagolovok{
+    margin: 2px;
+}
+
+.mButtons{
+    display: flex;
+    margin:0px 0px 1px 0px
+}
+
+.ssilka{
+    max-width: min-content;
+    padding: 3px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: rgba(223, 178, 122, 0.979);
+    font-family: inherit;
+    margin: 0px 20px 6px 0px;
+    cursor: pointer;    
+}
+
+.information{
+    display: flex;
+}
+
+.programm{
+    max-width: 650px;
+}
+
+.formula{
+    display: flex;
+    margin-bottom: 3px;
+}
+
+.formula div{
+    margin-right: 4px;
+}
+
+.data{
+    display: flex;
+    margin-bottom: 3px;
+}
+
+.data div{
+    margin-right: 4px;
+}
+
+.buttons{
+    display: flex;
+    margin-bottom: 3px;
+}
+
+.buttons div{
+    margin-right: 8px;
+}
+
+.bSsilka{
+    max-width: min-content;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: rgba(223, 178, 122, 0.979);
+    font-family: inherit;
+    margin: 0px 6px 6px 0px;
+    cursor: pointer;    
+}
+
+.text{
+    margin-left: 20px;
+    font-size:large;
+}
+
+.first{
+    margin-top: 0px;
+}
+
+.headArt{
+    width:200px ;
+}
+
+.EWeb{
+    color:black
+}
+
+.ssilka a{
+    color:black;
+    text-decoration: none;
+}
+
+#canvasId{
+    background-color: white;
+}
+

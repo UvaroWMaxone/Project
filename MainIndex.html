@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Конструктор</title>
+        <link href='style.css' rel='stylesheet'/>
+    </head>
+    <body>
+        <div class = 'head'>
+            <table>
+                <tr>
+                    <td>
+                        <img src="Без имени-1.png" class = 'headArt'/>
+                    </td>
+                    <td>
+                        <h1><em>Конструктор</em></h1> 
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="container">
+            <div class="mButtons">
+                <div class = 'ssilka'>
+                <a href="LybraryIndex.html">Энциклопедия</a>
+                </div>
+                <div class = 'ssilka'>
+                <a href="TestIndex.html">Тренажер </a>
+                </div>
+            </div>
+            <div class="main">
+                <h1>Конструктор графиков</h1>
+            </div>
+            <div class="information">
+                <div class="programm">
+                <script type="text/javascript">
+        
+                    function root(a, b) { //Корень степени a из b
+                     return Math.pow(b, 1 / a);
+                    }
+                    
+                    function logab(a, b) { //Логарифм от b по основанию a
+                     return Math.log(b) / Math.log(a);
+                    }
+                    
+                    function fact(a) { //Факториал от a
+                     if (a <= 0) return 1;
+                     var f=1;
+                     for (var i=1; i<=f; i++) f*=i;
+                     return f;
+                    }
+                    
+                    function Okrugl (a,eps) {//Округление, eps-число знаков после запятой
+                     a=Math.round(a*eval('1e'+eps));
+                     a*=eval('1e-'+eps); a+='';
+                     a+=(a.indexOf('.')==-1 ? '.' : '');
+                     return parseFloat(a.substring (0,a.indexOf('.')+eps+1)); 
+                    }
+                    
+                    function replaceSpecialSequence(str) { 
+                     //Тригонометрические функции
+                     str = str.split("cos").join("Math.cos");
+                     str = str.split("sin").join("Math.sin");
+                     str = str.split("tan").join("Math.tan");
+                     str = str.split("acos").join("Math.acos");
+                     str = str.split("asin").join("Math.asin");
+                     str = str.split("atan").join("Math.atan");
+                     str = str.split("pi").join("Math.PI");
+                     str = str.split("ln2").join("Math.LN2");
+                     str = str.split("ln10").join("Math.LN10");
+                     str = str.split("log2e").join("Math.LOG2E");
+                     str = str.split("log10e").join("Math.LOG10E");
+                     str = str.split("sqrt1_2").join("Math.SQRT1_2");
+                     str = str.split("sqrt2").join("Math.SQRT2");
+                     str = str.split("abs").join("Math.abs");
+                     str = str.split("ceil").join("Math.ceil");
+                         str = str.split("exp").join("Math.exp");
+                     str = str.split("floor").join("Math.floor");
+                     str = str.split("ln").join("Math.log");
+                         str = str.split("max").join("Math.max");
+                     str = str.split("min").join("Math.min");
+                     str = str.split("pow").join("Math.pow");
+                     str = str.split("round").join("Math.round");
+                     str = str.split("lg").join("logab");
+                     str = str.split("sqrt").join("Math.sqrt");
+                         str = str.split("e").join("Math.E");
+                     return str;
+                    }
+                    
+                    function splitFunc(func) { //Начальный разбор строки
+                     //Убрать "Y="
+                     var expr = func.substring(func.indexOf("=") + 1, func.length);
+                     //Переписать тригонометрические функции на Javascript
+                     expr = replaceSpecialSequence(expr);
+                     //Разбить строку на массив строк по разделителю "x"
+                     funcArray = expr.split("X");
+                    }
+                    
+                    function yVal(xVal) { //Построить выражение с аргументом xVal вместо x
+                     var expr = funcArray.join(xVal);
+                     return eval(expr);
+                    }
+                    
+                    function trim(string) {
+                     return string.replace (/(^\s+)|(\s+$)/g, "");
+                    }
+                    
+                    
+                    function Main () {
+                     var ff=trim(document.f1.func.value);
+                     if ((ff=='y=') || (ff=='')) {
+                      window.alert ("Пожалуйста, задайте допустимое выражение для функции"); return;
+                     }
+                     splitFunc (ff);
+                     var errormsg=
+                     "Недопустимые данные в полях ввода!\r\n" +
+                     "Требования: Начальное и конечное X - числа,\r\n" +
+                     "Начальное X меньше конечного.\r\n" +
+                     "Пожалуйста, исправьте ввод и нажмите ОК\r\n";
+                     var minx = document.f1.x1.value;
+                     var maxx = document.f1.x2.value;
+                     if ((isNaN(minx)==true) || (isNaN(maxx)==true)) {
+                      window.alert (errormsg); return;
+                     }
+                     minx = parseFloat(eval(replaceSpecialSequence(minx)));
+                     maxx = parseFloat(eval(replaceSpecialSequence(maxx)));
+                     if (minx>=maxx) {
+                      window.alert (errormsg); return;
+                     }
+                     else {
+                      //Определить размеры канвы
+                      var Width=document.getElementById('canvasId').width;
+                      var Height=document.getElementById('canvasId').height;
+                      var dx=(maxx-minx)/(Width-1);  //Шаг по X соотв. 1 пикселу
+                      //Создать массив значений Y:
+                      ar = new Array();
+                      var k=0;
+                      for (var i=minx; i<=maxx+1e-7; i+=dx) { ar[k] = yVal(i); k++; }
+                    
+                      var miny=ar[0];
+                      var maxy=miny;
+                      for (i=0; i<ar.length; i++) {
+                       if (ar[i]<miny) miny=ar[i];
+                       else if (ar[i]>maxy) maxy=ar[i];
+                      }
+                    
+                      var pc=Okrugl(100/((maxx-minx)/dx),2);
+                      var p=0;
+                      var scry=0;
+                      var canvas = document.getElementById('canvasId').getContext('2d');
+                      canvas.strokeStyle="rgb(0,0,0)";
+                      canvas.beginPath();
+                      var xcoef=(Width-1)/(maxx-minx);
+                      var ycoef=(Height-1)/(maxy-miny);
+                      for (i=0; i<Width; i++) {
+                       scry=Okrugl((ar[i]-miny)*ycoef,0);
+                       if (i==0) canvas.moveTo(0,Height-1-scry); // Ставим точку
+                       else canvas.lineTo(i,Height-1-scry); // Линии
+                       window.status='График: '+Okrugl(p,2)+'%';
+                       p+=pc;
+                      }
+                      canvas.stroke();
+                      //Красным дорисовать оси координат, если попадают в область
+                      canvas.strokeStyle="rgb(255,0,0)";
+                      if ((minx<=0) && (0<=maxx)) {
+                       scrx=Okrugl(-minx*xcoef,0);
+                       canvas.beginPath();
+                       canvas.moveTo(scrx,0);
+                       canvas.lineTo(scrx,Height-1);
+                       canvas.stroke();
+                      }
+                      scry=Okrugl(-miny*ycoef,0);
+                      if ((0<=scry) && (scry<Height)) {
+                       canvas.beginPath();
+                       canvas.moveTo(0,Height-1-scry);
+                       canvas.lineTo(Width-1,Height-1-scry);
+                       canvas.stroke();
+                      }
+                      
+                      //Вывести координаты угловых точек
+                      var sx=DrawNumber (''+Okrugl(minx,2),4,Height-10);
+                      DrawNumber (''+Okrugl(miny,2),sx+10,Height-10);
+                      var t=''+Okrugl(maxx,2)+10+Okrugl(maxy,2);
+                      var sx=DrawNumber (''+Okrugl(maxx,2),Width-1-t.length*7,10);
+                      DrawNumber (''+Okrugl(maxy,2),sx+10,10);
+                      window.status='Готово';
+                     }
+                    } 
+                    
+                    function DrawNumber (s,x,y) {
+                     //Вывод числа s с помощью картинок с позиции x,y
+                     var canvas = document.getElementById('canvasId').getContext('2d');
+                     for (var i=0; i<s.length; i++) {
+                      var img = new Image();
+                      var c=s.substring(i,i+1);
+                      if (c=='.') c='dot';
+                      else if (c=='-') c='minus';
+                      img.src = c+'.gif';
+                      canvas.drawImage(img,x+i*5,y);
+                     }
+                     return x+i*5;
+                    }
+                    
+                    
+                    function Clear () {
+                     document.f1.x1.value='';
+                     document.f1.x2.value='';
+                     document.f1.func.value='y=';
+                     var canvas = document.getElementById('canvasId').getContext('2d');
+                     canvas.fillStyle="rgb(255,255,255)";
+                     canvas.fillRect(0,0,document.getElementById('canvasId').width,document.getElementById('canvasId').height);
+                     canvas.fill();
+                    }
+                    </script>
+                    
+                    <form name="f1">
+                    <div>
+                        <div class="formula">
+                            <div align=left>
+                                Функция: <input type="text" name="func" maxlength="60" size="60" value="y=">
+                            </div>
+                        </div>
+                        <div class="data">
+                            <div align=left>
+                                Начальное X: <input type="text" name="x1" maxlength="6" size="6" value="0">
+                            </div>
+                            <div>
+                                Конечное X:  <input type="text" name="x2" maxlength="6" size="6" value="1">
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <div align=left>
+                                <input class="bSsilka" type="button" name="OK"    value="  ОК  " onClick="Main()">
+                            </div>
+                            <div>
+                                <input class="bSsilka" type="reset" name="Cancel" value="Очистить" onClick="Clear()">
+                            </div>
+                        </div>
+                        <div>
+                            <div colspan=3 align=center valign=middle>
+                                <canvas style="border:1px solid #888;" id="canvasId" width="640" height="480">Извините, тег Canvas недоступен!</canvas>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="text">
+                    <p class="first">Инструкция по использованию конструктора графиков!
+                        <p>Функция вводится в верхнем поле в общем виде y=f(X), важно,
+                        чтобы аргумент назывался именно большое X и присутствовал знак '='.
+                        <p>Примеры ввода:
+                        <br>y=X*X
+                        <br>y=(sin(X)+cos(X))/2
+                        <br>y=max(2*X,pow(X,2))
+                        <p>График строится в новом окне, создаваемом программой. Шаг по X выбирается, исходя из назначенного пользователем
+                        размера окна по X. Шаг по Y корректируется с шагом по X, чтобы изображение функции получалось неискаженным.
+                        Поэтому, если в выбранных пределах по X функция меняется быстро, 
+                        могут быть отображены не все значения.
+                        
+                        <p>Код поддерживает следующие СТАНДАРТНЫЕ ФУНКЦИИ и КОНСТАНТЫ:
+                        <br>abs(X) - модуль числа X.
+                        <br>acos(X) - арккосинус X (значение от 0 до pi радианов).
+                        <br>asin(X) - арксинус X (значение от -pi/2 до pi/2 радианов).
+                        <br>atan(X) - арктангенс X (значение от -pi/2 до pi/2 радианов).
+                        <br>cos(X) - косинус X (значение от -1.0 до 1.0 радианов).
+                        <br>pow(a,b) - a в степени b.
+                        <br>root(a,b) - корень степени b из a.
+                        <br>sin(X) - синус X.
+                        <br>sqrt(X) - квадратный корень от X.
+                        <br>tan(X) - тангенс X.
+                        <br>pi - число ПИ(3.14159...)
+                        <p>Внимание! Тригонометрические функции измеряются в радианах!
+                        
+                </div>
+            </div>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
+
